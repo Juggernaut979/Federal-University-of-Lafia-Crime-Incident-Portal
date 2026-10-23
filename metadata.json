@@ -1,0 +1,6 @@
+{
+  "name": "FULafia Security & Incident Management Portal",
+  "description": "Official Federal University of Lafia Security Directorate digital incident reporting, tracking, and command dispatch triage matrix.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

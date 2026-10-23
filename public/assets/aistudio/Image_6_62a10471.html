@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FULafia Crime Portal Landing Page &amp; Public Incident Reporting Hub</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with custom configuration -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#d1c5b2",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#31312c",
+            "on-primary-fixed-variant": "#5c4300",
+            "on-surface-variant": "#4e4637",
+            "tertiary-container": "#00873c",
+            "on-tertiary-container": "#f7fff3",
+            "on-background": "#1c1c18",
+            "on-surface": "#1c1c18",
+            "background": "#fcf9f2",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-fixed-variant": "#005322",
+            "secondary": "#5f5e5e",
+            "primary": "#765700",
+            "surface-container-highest": "#e5e2db",
+            "secondary-fixed": "#e5e2e1",
+            "on-secondary-fixed": "#1c1b1b",
+            "tertiary-fixed-dim": "#6add84",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-high": "#ebe8e1",
+            "surface-container-lowest": "#ffffff",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "surface-container-low": "#f6f3ec",
+            "surface-dim": "#dcdad3",
+            "primary-container": "#926f1b",
+            "outline": "#807665",
+            "tertiary-fixed": "#87fb9d",
+            "on-primary-fixed": "#261900",
+            "secondary-container": "#e2dfde",
+            "surface-bright": "#fcf9f2",
+            "surface-variant": "#e5e2db",
+            "on-secondary-container": "#636262",
+            "secondary-fixed-dim": "#c8c6c5",
+            "on-primary-container": "#fffbff",
+            "surface-tint": "#795900",
+            "surface": "#fcf9f2",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "inverse-on-surface": "#f3f0ea",
+            "primary-fixed-dim": "#ecc166",
+            "inverse-primary": "#ecc166",
+            "surface-container": "#f0eee7",
+            "on-secondary-fixed-variant": "#474746",
+            "primary-fixed": "#ffdea0",
+            "tertiary": "#006b2e"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-mobile": "1rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "margin-mobile": "1rem",
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.5rem",
+            "space-2xl": "3rem"
+          },
+          "fontFamily": {
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "title-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "display-lg": ["Inter"]
+          },
+          "fontSize": {
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Level 4 Critical Emergency Banner -->
+<aside aria-label="Emergency Hotline Banner" class="w-full bg-[#8B1A1A] text-on-primary py-2.5 px-gutter shadow-sm relative z-50">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+<div class="flex items-center gap-2">
+<span class="inline-flex relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+</span>
+<span class="font-label-lg text-label-lg tracking-wide uppercase font-bold text-white">
+          FULafia Security Unit 24/7 Hotline:
+        </span>
+<a class="font-label-lg text-label-lg font-bold text-primary-fixed hover:underline" href="tel:+2348031234567">+234 803 123 4567</a>
+</div>
+<div class="flex items-center gap-2 font-label-md text-label-md text-surface-bright">
+<span class="opacity-80">Quick SMS / WhatsApp SOS:</span>
+<a class="font-bold underline text-surface-container-lowest hover:text-primary-fixed" href="https://wa.me/2348129876543" target="_blank">+234 812 987 6543</a>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar (Shared Component: TopNavBar execution) -->
+<header class="w-full sticky top-0 z-40 px-gutter flex justify-between items-center h-16 bg-surface-container-lowest border-b border-outline-variant shadow-sm">
+<div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+<!-- Crest & Brand Title -->
+<a class="flex items-center gap-3 group" href="#">
+<img alt="Federal University of Lafia Security Crest" class="h-11 w-11 object-contain transition-transform group-hover:scale-105 duration-150" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqj6UHLsud92YrLfNClbJuhphZMqUiqW6-eQqq-ASh-zQj28s7A_GbZ822Tai_lNH0JJxnP7jdjSIyzY1Y-Kgg6AKVGeV62pir00_4iJw3BknrOAmPcIbAmrYKv3Zc88fOiFzrjZudhoc0YqOnmGGL6U7bsIxll7bkFjPGkfpCSYaHQ2HE_70_QOXHqCxtyVxn3axEmBbRK_PtXV9k9DvYQM5pXhvWAZI4-XJQ4_j6fyThjb8YS_N5Fts5-KGMBRM65DE"/>
+<div class="flex flex-col">
+<span class="text-title-md font-title-md font-bold text-on-surface tracking-tight leading-snug">
+            Federal University of Lafia Crime Incident Portal
+          </span>
+<span class="text-label-sm font-label-sm text-outline tracking-wider">
+            Integrity, Innovation, Excellence
+          </span>
+</div>
+</a>
+<!-- Navigation links (Desktop: Active on Public Portal) -->
+<nav class="hidden md:flex items-center gap-6 h-16">
+<a class="h-full flex items-center px-1 border-b-2 border-primary text-primary font-semibold text-label-lg font-label-lg transition-colors" href="#public-portal">
+          Public Portal
+        </a>
+<a class="h-full flex items-center px-1 text-on-surface-variant hover:text-on-surface text-label-lg font-label-lg transition-colors hover:border-b-2 hover:border-outline-variant" href="#emergency-sos">
+          Emergency SOS
+        </a>
+<a class="h-full flex items-center px-1 text-on-surface-variant hover:text-on-surface text-label-lg font-label-lg transition-colors hover:border-b-2 hover:border-outline-variant" href="#track-case">
+          Track Case
+        </a>
+<a class="h-full flex items-center px-1 text-on-surface-variant hover:text-on-surface text-label-lg font-label-lg transition-colors hover:border-b-2 hover:border-outline-variant" href="#officer-login">
+          Officer Login
+        </a>
+</nav>
+<!-- Action Cluster -->
+<div class="flex items-center gap-3">
+<button aria-label="Notifications" class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button aria-label="Security Shield" class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</button>
+<a class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#8B1A1A] text-white text-label-md font-label-md font-bold tracking-wide shadow-sm hover:bg-[#721515] transition-all duration-150 active:scale-95" href="tel:+2348031234567">
+<span class="material-symbols-outlined text-[16px]">call</span>
+          Emergency Hotline
+        </a>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative bg-surface py-16 lg:py-20 border-b border-outline-variant/60 overflow-hidden">
+<div class="max-w-7xl mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Hero Copy -->
+<div class="lg:col-span-7 space-y-6">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed border border-primary-container/30">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="text-label-sm font-label-sm uppercase tracking-wider">Official Directorate of Security Services</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">
+            Report. Track. Stay Safe.
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+            Official digital incident management system for students, faculty, and campus visitors. Report crimes securely, attach photo evidence, or submit 100% anonymously.
+          </p>
+<!-- CTAs -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-sm hover:bg-primary transition-all duration-150 active:scale-95" href="#quick-report-form">
+<span class="material-symbols-outlined text-[20px]">report_problem</span>
+              Report an Incident Now
+            </a>
+<a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-surface-container-lowest text-on-surface border border-primary/30 font-label-lg text-label-lg font-semibold hover:bg-surface-container hover:border-primary transition-all duration-150 active:scale-95" href="#track-case">
+<span class="material-symbols-outlined text-[20px]">timeline</span>
+              Track Report Status
+            </a>
+<div class="w-full sm:w-auto pt-1 sm:pt-0 sm:pl-2">
+<a class="inline-flex items-center gap-1.5 text-on-surface-variant hover:text-primary font-label-md text-label-md transition-colors" href="#officer-login">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+                Officer &amp; Admin Login
+              </a>
+</div>
+</div>
+<!-- Trust Badges -->
+<div class="pt-4 grid grid-cols-3 gap-4 border-t border-outline-variant/40 max-w-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]">enhanced_encryption</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">256-Bit SSL Encrypted</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]">visibility_off</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Anonymous Guarantee</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">&lt; 7 Min Response</span>
+</div>
+</div>
+</div>
+<!-- Hero Visual / Live Dispatch Counter Panel -->
+<div class="lg:col-span-5">
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-space-lg shadow-sm space-y-5">
+<div class="flex items-center justify-between pb-3 border-b border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="h-2.5 w-2.5 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-title-md text-title-md font-bold text-on-surface">Campus Command Status</span>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary border border-tertiary/20 font-bold">Patrols Active</span>
+</div>
+<!-- Operational Grid -->
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container-low p-3.5 rounded-lg border border-outline-variant/40">
+<div class="font-label-sm text-label-sm text-on-surface-variant">Active Mobile Units</div>
+<div class="font-headline-md text-headline-md font-bold text-on-surface mt-1">08 Units</div>
+<span class="font-body-sm text-body-sm text-tertiary font-medium">Main &amp; Take-off Campus</span>
+</div>
+<div class="bg-surface-container-low p-3.5 rounded-lg border border-outline-variant/40">
+<div class="font-label-sm text-label-sm text-on-surface-variant">Avg Emergency Triage</div>
+<div class="font-headline-md text-headline-md font-bold text-primary mt-1">4.2 min</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Priority 1 Dispatches</span>
+</div>
+</div>
+<!-- Incident Feed Mini-Ticker -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/40 p-3 space-y-2">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-outline">
+<span>RECENT DISPATCH LOG</span>
+<span class="text-tertiary font-semibold">SECURE TRANSMISSION</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm p-2 rounded bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+<span class="text-on-surface font-medium">Take-off Campus Gate</span>
+</div>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">Patrol Clear</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm p-2 rounded bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">lock_reset</span>
+<span class="text-on-surface font-medium">Science Complex Access</span>
+</div>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-tertiary/15 text-tertiary border border-tertiary/25">Secured</span>
+</div>
+</div>
+</div>
+<div class="pt-2 text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">
+                “Discipline, Vigilance, and Swift Response to Protect the FULafia Community.”
+              </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Three-Step Workflow Cards -->
+<section class="py-16 max-w-7xl mx-auto px-gutter">
+<div class="text-center max-w-2xl mx-auto mb-12">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">How Public Reporting Works</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          A confidential, three-tier workflow connecting you directly to campus dispatchers and the Chief Security Officer.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Step 1 Card -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/50 shadow-sm hover:border-primary/50 transition-all duration-200 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-lg bg-primary-fixed/40 flex items-center justify-center text-primary mb-5 border border-primary/20">
+<span class="material-symbols-outlined text-[26px]">edit_document</span>
+</div>
+<div class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider mb-1">Phase 01</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-3">Step 1: Rapid Incident Report</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Choose incident category (Theft, Threat, Harassment, Medical SOS), capture incident time, specific campus location, and toggle 100% anonymous identity shielding.
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-surface-container-high flex items-center justify-between text-label-md font-label-md text-on-surface-variant">
+<span>Identity Protected</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">check_circle</span>
+</div>
+</div>
+<!-- Step 2 Card -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/50 shadow-sm hover:border-primary/50 transition-all duration-200 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-lg bg-primary-fixed/40 flex items-center justify-center text-primary mb-5 border border-primary/20">
+<span class="material-symbols-outlined text-[26px]">attachment</span>
+</div>
+<div class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider mb-1">Phase 02</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-3">Step 2: Upload Evidence</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Securely upload photographs, audio logs, CCTV snapshots, or document screenshots. All submissions receive instant cryptographic timestamps for chain-of-custody integrity.
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-surface-container-high flex items-center justify-between text-label-md font-label-md text-on-surface-variant">
+<span>Encrypted Storage</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">lock</span>
+</div>
+</div>
+<!-- Step 3 Card -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/50 shadow-sm hover:border-primary/50 transition-all duration-200 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-lg bg-primary-fixed/40 flex items-center justify-center text-primary mb-5 border border-primary/20">
+<span class="material-symbols-outlined text-[26px]">monitoring</span>
+</div>
+<div class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider mb-1">Phase 03</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-3">Step 3: Track &amp; Receive Updates</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Receive a unique Case Reference ID. Follow real-time triage updates, officer assignments, discreet two-way messaging, and case resolution notes without exposing your identity.
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-surface-container-high flex items-center justify-between text-label-md font-label-md text-on-surface-variant">
+<span>Real-time Alerts</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">update</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Track Status Quick Lookup & Live Preview Section -->
+<section class="py-16 bg-surface-container-low border-y border-outline-variant/50" id="track-case">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Quick Lookup Form Widget -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/60 shadow-sm">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[22px]">search_check</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Track Status Quick Lookup</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+              Check active investigation milestones, assigned officer details, or download formal incident verification slips.
+            </p>
+<form class="space-y-4" onsubmit="event.preventDefault();">
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5" for="report-id">
+                  Report Tracking ID
+                </label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-outline text-[20px]">badge</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors" id="report-id" placeholder="e.g. FUL-2025-0482" type="text" value="FUL-2025-0482"/>
+</div>
+<span class="font-body-sm text-body-sm text-outline mt-1 block">Enter your 8 or 10-character reference generated during submission.</span>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5" for="security-pin">
+                  Verification Access PIN (Optional for anonymous reports)
+                </label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors" id="security-pin" placeholder="••••" type="password" value="7941"/>
+</div>
+<button class="w-full py-3 rounded-lg bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-sm hover:bg-primary transition-all duration-150 active:scale-95 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                Verify Status
+              </button>
+</form>
+<div class="mt-6 pt-5 border-t border-surface-container-high bg-surface-container-low p-3.5 rounded-lg text-body-sm font-body-sm text-on-surface-variant">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
+<span>Lost your Report ID? Visit the Directorate Security Headquarters in person with valid university identification (Staff/Student ID).</span>
+</div>
+</div>
+</div>
+<!-- Live Sample Tracker Card Previewing 4-Step Vertical Timeline -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/60 shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-surface-container-high gap-2">
+<div>
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">Live Report Tracker Preview</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold">Case #FUL-2025-0482</h4>
+</div>
+<!-- Status Chip: Under Investigation -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-md font-label-md font-bold bg-[#B08A35]/15 text-[#765700] border border-[#B08A35]/30">
+<span class="w-2 h-2 rounded-full bg-[#765700]"></span>
+                Under Investigation
+              </span>
+</div>
+<!-- Incident Snapshot Meta -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-5 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40">
+<div>
+<div class="font-label-sm text-label-sm text-outline">Category</div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Unlawful Trespass</div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-outline">Filed Date</div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">24 Oct 2025</div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-outline">Location</div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Hostel Block D</div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-outline">Investigator</div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Inspector M. Garba</div>
+</div>
+</div>
+<!-- 4-step vertical timeline -->
+<div class="space-y-6 relative pl-6 before:content-[''] before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-outline-variant">
+<!-- Timeline Step 1: Completed -->
+<div class="relative">
+<div class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-tertiary text-white flex items-center justify-center ring-4 ring-surface-container-lowest">
+<span class="material-symbols-outlined text-[13px] font-bold">check</span>
+</div>
+<div class="flex items-center justify-between">
+<h5 class="font-title-md text-title-md font-bold text-on-surface">1. Submitted</h5>
+<span class="font-body-sm text-body-sm text-outline">24 Oct, 09:14 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Report logged via Online Public Portal. Encrypted reference ID generated and evidence package attached.
+                </p>
+</div>
+<!-- Timeline Step 2: Completed -->
+<div class="relative">
+<div class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-tertiary text-white flex items-center justify-center ring-4 ring-surface-container-lowest">
+<span class="material-symbols-outlined text-[13px] font-bold">check</span>
+</div>
+<div class="flex items-center justify-between">
+<h5 class="font-title-md text-title-md font-bold text-on-surface">2. Under Review</h5>
+<span class="font-body-sm text-body-sm text-outline">24 Oct, 09:30 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Triage team classified priority level as High. Incident forwarded to Permanent Site Security Division.
+                </p>
+</div>
+<!-- Timeline Step 3: Active State -->
+<div class="relative">
+<div class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-primary-container text-white flex items-center justify-center ring-4 ring-primary-fixed/40">
+<span class="material-symbols-outlined text-[13px] font-bold">sync</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h5 class="font-title-md text-title-md font-bold text-primary">3. Under Investigation</h5>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-bold">Current</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">24 Oct, 11:00 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium mt-1">
+                  Officer dispatched for field assessment at Hostel Block D. Surveillance camera logs retrieved for cross-reference.
+                </p>
+<div class="mt-2.5 p-2.5 bg-surface-container-low rounded border border-outline-variant/30 text-body-sm font-body-sm text-on-surface-variant">
+<strong class="text-on-surface">Officer Remark:</strong> "Physical patrol completed; identified unauthorized entry point. Maintenance notified for reinforcement."
+                </div>
+</div>
+<!-- Timeline Step 4: Pending -->
+<div class="relative opacity-60">
+<div class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-surface-dim text-on-surface flex items-center justify-center ring-4 ring-surface-container-lowest">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</div>
+<div class="flex items-center justify-between">
+<h5 class="font-title-md text-title-md font-bold text-on-surface">4. Resolved</h5>
+<span class="font-body-sm text-body-sm text-outline">Pending</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Formal incident conclusion, security clearance update, and safety report issued to the complainant.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Rapid Incident Report Interactive Form Component -->
+<section class="py-16 max-w-7xl mx-auto px-gutter" id="quick-report-form">
+<div class="max-w-4xl mx-auto bg-surface-container-lowest rounded-xl border border-outline-variant/60 shadow-sm p-space-lg lg:p-space-xl">
+<div class="border-b border-surface-container-high pb-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Submit a Secure Incident Report</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">All submissions are monitored around the clock by the Lafia Command Center.</p>
+</div>
+<span class="font-label-sm text-label-sm px-3 py-1 rounded-full bg-tertiary-container/20 text-tertiary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+            Whistleblower Protection Active
+          </span>
+</div>
+<form class="space-y-6" onsubmit="event.preventDefault(); alert('Incident report draft saved. In production, this issues an immediate dispatch ticket.');">
+<!-- Category and Anonymous Selector -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5" for="incident-category">
+                Incident Classification *
+              </label>
+<select class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none" id="incident-category">
+<option value="theft">Theft / Burglary / Lost Property</option>
+<option value="harassment">Threat / Harassment / Extortion</option>
+<option value="trespass">Unauthorized Campus Trespass</option>
+<option value="assault">Physical Altercation / Assault</option>
+<option value="cultism">Anti-Cultism Suspicious Activity</option>
+<option value="medical">Medical / Health Crisis</option>
+<option value="other">Other Security Breach</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5" for="campus-site">
+                Campus Location *
+              </label>
+<select class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none" id="campus-site">
+<option value="permanent">Permanent Site (Main Campus - Makurdi Road)</option>
+<option value="takeoff">Take-Off Site (Akunza Campus)</option>
+<option value="hostel-male">Male Hostels Quadrangle</option>
+<option value="hostel-female">Female Hostels Quadrangle</option>
+<option value="library">University Library &amp; ICT Complex</option>
+<option value="faculty-science">Faculty of Science Building</option>
+<option value="convocation">Convocation Arena &amp; Sports Center</option>
+<option value="off-campus">Off-Campus Student Vicinity</option>
+</select>
+</div>
+</div>
+<!-- Time and Anonymous Toggle -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5" for="incident-datetime">
+                Approximate Date &amp; Time of Incident
+              </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none" id="incident-datetime" type="datetime-local"/>
+</div>
+<div class="flex flex-col justify-end">
+<label class="flex items-center gap-3 p-2.5 rounded-lg border border-outline-variant bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="w-4 h-4 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox"/>
+<div>
+<span class="block font-label-md text-label-md text-on-surface font-bold">Submit 100% Anonymously</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Mask all personal IP data and contact fields.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Detailed Narrative -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5" for="incident-details">
+              Incident Narrative &amp; Description *
+            </label>
+<textarea class="w-full px-3.5 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none" id="incident-details" placeholder="State clearly what happened, names or physical descriptions of persons involved, vehicles, or specific landmark identifiers..." rows="4"></textarea>
+</div>
+<!-- Evidence Upload Area -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface font-semibold mb-1.5">
+              Attach Supporting Evidence (Images, Audio, PDF)
+            </label>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-6 text-center hover:bg-surface-container-low transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[36px] text-outline mb-2">cloud_upload</span>
+<p class="font-label-lg text-label-lg text-on-surface font-bold">Click to upload files or drag and drop</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">PNG, JPG, MP4, MP3 or PDF up to 25MB. Files are stripped of EXIF metadata for privacy.</p>
+</div>
+</div>
+<!-- Submit Buttons -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-surface-container-high">
+<span class="font-body-sm text-body-sm text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+              Protected under the FULafia Whistleblower Protection Charter
+            </span>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<button class="w-1/2 sm:w-auto px-5 py-2.5 rounded-lg border border-outline-variant text-on-surface font-label-md text-label-md font-semibold hover:bg-surface-container" type="reset">
+                Clear
+              </button>
+<button class="w-1/2 sm:w-auto px-6 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-sm hover:bg-primary transition-all duration-150 active:scale-95 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">send</span>
+                Submit Official Report
+              </button>
+</div>
+</div>
+</form>
+</div>
+</section>
+<!-- Safety Bulletins & Campus Hotlines -->
+<section class="py-16 bg-surface-container-low border-t border-outline-variant/60" id="emergency-sos">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="mb-10 text-center sm:text-left flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+<div>
+<span class="font-label-sm text-label-sm font-bold text-primary uppercase tracking-wider">Direct Security Intercept</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Safety Bulletins &amp; Campus Hotlines</h2>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Stationed at Command Dispatch Rooms, 24/7/365</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Hotline 1 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed/40 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">local_police</span>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary font-bold">Always On</span>
+</div>
+<h3 class="font-title-md text-title-md font-bold text-on-surface">Main Campus Security Post</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 mb-4">
+                Direct tactical response for Permanent Site, academic faculties, and student halls of residence.
+              </p>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-outline mb-1">Direct Lines:</div>
+<a class="block font-headline-sm text-headline-sm font-bold text-primary hover:underline" href="tel:+2348031234567">
+                +234 803 123 4567
+              </a>
+<a class="block font-body-md text-body-md text-on-surface-variant hover:text-on-surface" href="tel:+2348029988776">
+                Alt: +234 802 998 8776
+              </a>
+</div>
+</div>
+<!-- Hotline 2 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-lg bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[24px]">medical_services</span>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-error-container text-error font-bold">Ambulance</span>
+</div>
+<h3 class="font-title-md text-title-md font-bold text-on-surface">Medical Centre Emergency</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 mb-4">
+                Campus health triage, rapid ambulance dispatch, and crisis mental health stabilization.
+              </p>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-outline mb-1">Emergency Line:</div>
+<a class="block font-headline-sm text-headline-sm font-bold text-error hover:underline" href="tel:+2348035550199">
+                +234 803 555 0199
+              </a>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Stationed at University Health Centre</span>
+</div>
+</div>
+<!-- Hotline 3 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[24px]">security</span>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-tertiary-fixed/40 text-tertiary font-bold">Confidential</span>
+</div>
+<h3 class="font-title-md text-title-md font-bold text-on-surface">Anti-Cultism &amp; Harassment</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 mb-4">
+                Specialized confidential investigatory unit reporting directly to the Vice-Chancellor &amp; CSO.
+              </p>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-outline mb-1">Confidential Hotline:</div>
+<a class="block font-headline-sm text-headline-sm font-bold text-tertiary hover:underline" href="tel:+2348129876543">
+                +234 812 987 6543
+              </a>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Dedicated WhatsApp &amp; SMS Desk</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component: Footer execution) -->
+<footer class="w-full bg-surface-container border-t border-outline-variant">
+<div class="max-w-7xl mx-auto py-10 px-gutter flex flex-col lg:flex-row items-center justify-between gap-6">
+<!-- Brand & Motto -->
+<div class="flex items-center gap-3">
+<img alt="Federal University of Lafia Security Crest" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqj6UHLsud92YrLfNClbJuhphZMqUiqW6-eQqq-ASh-zQj28s7A_GbZ822Tai_lNH0JJxnP7jdjSIyzY1Y-Kgg6AKVGeV62pir00_4iJw3BknrOAmPcIbAmrYKv3Zc88fOiFzrjZudhoc0YqOnmGGL6U7bsIxll7bkFjPGkfpCSYaHQ2HE_70_QOXHqCxtyVxn3axEmBbRK_PtXV9k9DvYQM5pXhvWAZI4-XJQ4_j6fyThjb8YS_N5Fts5-KGMBRM65DE"/>
+<div>
+<span class="text-title-md font-title-md font-bold text-on-surface tracking-tight block">
+            Federal University of Lafia Security Directorate
+          </span>
+<span class="text-body-sm font-body-sm text-on-surface-variant block">
+            Motto: Integrity, Innovation, Excellence
+          </span>
+</div>
+</div>
+<!-- Footer Policy Links -->
+<nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-body-sm font-body-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#emergency-sos">Emergency Dispatch</a>
+<a class="hover:text-primary transition-colors" href="#">Reporting Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Chain of Custody Protocol</a>
+<a class="hover:text-primary transition-colors" href="#">Whistleblower Protection</a>
+<a class="hover:text-primary transition-colors" href="#officer-login">Staff &amp; Student Portal</a>
+</nav>
+<!-- Copyright Notice -->
+<div class="text-body-sm font-body-sm text-outline text-center lg:text-right">
+        © 2025 Federal University of Lafia Security Directorate. All rights reserved.
+      </div>
+</div>
+</footer>
+</body></html>
