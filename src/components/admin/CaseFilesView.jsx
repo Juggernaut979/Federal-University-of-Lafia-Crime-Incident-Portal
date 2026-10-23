@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import { IncidentRecord } from '../../types';
 
-interface CaseFilesViewProps {
-  incidents: IncidentRecord[];
-  onSelectIncident: (incident: IncidentRecord) => void;
-  onOpenDossier: (incident: IncidentRecord) => void;
-}
-
-export const CaseFilesView: React.FC<CaseFilesViewProps> = ({ incidents, onSelectIncident, onOpenDossier }) => {
+export const CaseFilesView = ({ incidents, onSelectIncident, onOpenDossier }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('All');
 

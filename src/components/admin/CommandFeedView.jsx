@@ -1,12 +1,6 @@
 import React from 'react';
-import { DispatchEvent } from '../../types';
 
-interface CommandFeedViewProps {
-  events: DispatchEvent[];
-  onTriggerSOS: () => void;
-}
-
-export const CommandFeedView: React.FC<CommandFeedViewProps> = ({ events, onTriggerSOS }) => {
+export const CommandFeedView = ({ events, onTriggerSOS }) => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-outline-variant gap-4">

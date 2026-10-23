@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SystemAnalyticsView: React.FC = () => {
+export const SystemAnalyticsView = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-outline-variant gap-4">

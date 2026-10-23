@@ -1,20 +1,6 @@
-import React, { useState } from 'react';
-import { IncidentRecord, CampusSector, PriorityLevel, IncidentStatus, EvidenceItem } from '../../types';
+import React, { useState, useEffect } from 'react';
 
-interface IncidentTriageViewProps {
-  incidents: IncidentRecord[];
-  selectedIncident: IncidentRecord;
-  onSelectIncident: (incident: IncidentRecord) => void;
-  onUpdateRemarks: (incidentId: string, remarks: string) => void;
-  onOpenDossier: (incident: IncidentRecord) => void;
-  onOpenEvidence: (evidence: EvidenceItem) => void;
-  onEscalate: (incidentId: string) => void;
-  onAssignPatrol: (incident: IncidentRecord) => void;
-  activeSector: CampusSector;
-  setActiveSector: (sector: CampusSector) => void;
-}
-
-export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
+export const IncidentTriageView = ({
   incidents,
   selectedIncident,
   onSelectIncident,
@@ -31,19 +17,23 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
   const [filterStatus, setFilterStatus] = useState('All');
   const [filterLocation, setFilterLocation] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-  const [remarksDraft, setRemarksDraft] = useState(selectedIncident.officerRemarks);
+  const [remarksDraft, setRemarksDraft] = useState(selectedIncident ? selectedIncident.officerRemarks : '');
   const [isSavedFeedback, setIsSavedFeedback] = useState(false);
 
   // Sync draft when selected incident changes
-  React.useEffect(() => {
-    setRemarksDraft(selectedIncident.officerRemarks);
-  }, [selectedIncident.id, selectedIncident.officerRemarks]);
+  useEffect(() => {
+    if (selectedIncident) {
+      setRemarksDraft(selectedIncident.officerRemarks || '');
+    }
+  }, [selectedIncident]);
 
   // Handle remarks update
   const handleSaveRemarks = () => {
-    onUpdateRemarks(selectedIncident.id, remarksDraft);
-    setIsSavedFeedback(true);
-    setTimeout(() => setIsSavedFeedback(false), 2000);
+    if (selectedIncident) {
+      onUpdateRemarks(selectedIncident.id, remarksDraft);
+      setIsSavedFeedback(true);
+      setTimeout(() => setIsSavedFeedback(false), 2000);
+    }
   };
 
   // Filtered incidents
@@ -87,7 +77,7 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
   };
 
   // Priority color tags
-  const renderPriorityBadge = (priority: PriorityLevel) => {
+  const renderPriorityBadge = (priority) => {
     switch (priority) {
       case 'Critical':
         return <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-error-container text-on-error-container border border-error/30">Critical</span>;
@@ -103,7 +93,7 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
   };
 
   // Status color tags
-  const renderStatusBadge = (status: IncidentStatus) => {
+  const renderStatusBadge = (status) => {
     switch (status) {
       case 'Under Investigation':
         return (
@@ -132,8 +122,12 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
             Closed
           </span>
         );
+      default:
+        return null;
     }
   };
+
+  const currentSelection = selectedIncident || incidents[0] || {};
 
   return (
     <div className="space-y-6">
@@ -155,7 +149,7 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
 
         <div className="flex items-center gap-3">
           <div className="inline-flex rounded-lg border border-outline-variant p-0.5 bg-surface-container-low text-body-sm">
-            {(['All Sectors', 'Permanent Campus', 'Take-off Site'] as const).map((sector) => (
+            {['All Sectors', 'Permanent Campus', 'Take-off Site'].map((sector) => (
               <button
                 key={sector}
                 onClick={() => setActiveSector(sector)}
@@ -171,7 +165,6 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
           </div>
           <button
             onClick={() => {
-              // Simulated live pulse
               setIsSavedFeedback(true);
               setTimeout(() => setIsSavedFeedback(false), 800);
             }}
@@ -347,7 +340,7 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
                   </tr>
                 ) : (
                   filteredIncidents.map((incident) => {
-                    const isSelected = selectedIncident.id === incident.id;
+                    const isSelected = currentSelection.id === incident.id;
                     return (
                       <tr
                         key={incident.id}
@@ -458,154 +451,156 @@ export const IncidentTriageView: React.FC<IncidentTriageViewProps> = ({
         </section>
 
         {/* 4. QUICK CASE DETAIL DRAWER PREVIEW (4 COLS) */}
-        <aside
-          aria-label="Case Detail Docket Preview"
-          className="xl:col-span-4 bg-surface-container-lowest rounded-xl border-2 border-primary/40 shadow-md p-5 flex flex-col space-y-4"
-        >
-          {/* Header with Docket ID & Badges */}
-          <div className="flex items-start justify-between border-b border-outline-variant/60 pb-3">
-            <div>
-              <span className="text-label-sm uppercase font-bold text-primary tracking-wider">Active Docket Review</span>
-              <h3 className="text-headline-sm font-bold text-on-surface flex items-center gap-2">
-                <span>{selectedIncident.id}</span>
-                <span className={`text-xs px-2 py-0.5 rounded font-bold uppercase ${
-                  selectedIncident.priority === 'Critical' ? 'bg-error-container text-on-error-container' :
-                  selectedIncident.priority === 'High' ? 'bg-error-container text-on-error-container' :
-                  'bg-secondary-container text-on-secondary-container'
-                }`}>
-                  {selectedIncident.priority}
-                </span>
-              </h3>
-            </div>
-            <button
-              onClick={() => onOpenDossier(selectedIncident)}
-              className="text-on-surface-variant hover:text-on-surface p-1 rounded-lg hover:bg-surface-container transition-colors"
-              title="Open Full Dossier View"
-              aria-label="Open Full Dossier View"
-            >
-              <span className="material-symbols-outlined">open_in_new</span>
-            </button>
-          </div>
-
-          {/* Case Summary Details */}
-          <div className="space-y-3">
-            <div>
-              <h4 className="text-label-md text-on-surface-variant font-medium">Incident Subject</h4>
-              <p className="text-body-md font-bold text-on-surface mt-0.5">{selectedIncident.subject}</p>
-            </div>
-
-            {/* Location & Map Coordinate Pin */}
-            <div className="p-3 bg-surface-container-low rounded-lg border border-outline-variant/50 flex items-start gap-3">
-              <span className="material-symbols-outlined text-primary text-2xl shrink-0 mt-0.5">pin_drop</span>
-              <div className="text-body-sm">
-                <div className="font-bold text-on-surface">{selectedIncident.location}</div>
-                <div className="text-on-surface-variant">{selectedIncident.campusSector} • Sector C South Block</div>
-                <div className="text-[11px] font-mono text-outline mt-0.5">{selectedIncident.coordinates}</div>
-              </div>
-            </div>
-
-            {/* Reporter Meta */}
-            <div className="grid grid-cols-2 gap-3 text-body-sm py-1 border-y border-outline-variant/40">
+        {currentSelection && currentSelection.id ? (
+          <aside
+            aria-label="Case Detail Docket Preview"
+            className="xl:col-span-4 bg-surface-container-lowest rounded-xl border-2 border-primary/40 shadow-md p-5 flex flex-col space-y-4"
+          >
+            {/* Header with Docket ID & Badges */}
+            <div className="flex items-start justify-between border-b border-outline-variant/60 pb-3">
               <div>
-                <span className="text-on-surface-variant text-label-sm">Reporter:</span>
-                <div className="font-semibold text-on-surface">{selectedIncident.reporterName}</div>
-                <div className="text-xs text-on-surface-variant font-mono">
-                  {selectedIncident.reporterId ? `Matric: ${selectedIncident.reporterId}` : '100% Anonymous'}
-                </div>
-              </div>
-              <div>
-                <span className="text-on-surface-variant text-label-sm">Assigned Lead:</span>
-                <div className="font-semibold text-on-surface">{selectedIncident.assignedLead}</div>
-                <div className="text-xs text-primary font-medium">{selectedIncident.assignedTeam}</div>
-              </div>
-            </div>
-
-            {/* Uploaded Photo Evidence */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-label-md font-semibold text-on-surface">
-                  Uploaded Photo Evidence ({selectedIncident.evidence.length})
-                </span>
-                <span className="text-label-sm text-outline">Verified Chain of Custody</span>
-              </div>
-
-              {selectedIncident.evidence.length > 0 ? (
-                <div className="grid grid-cols-2 gap-2">
-                  {selectedIncident.evidence.map((ev) => (
-                    <div
-                      key={ev.id}
-                      onClick={() => onOpenEvidence(ev)}
-                      className="relative rounded-lg overflow-hidden border border-outline-variant group bg-surface-container-high h-24 cursor-pointer hover:border-primary transition-all"
-                    >
-                      <img
-                        src={ev.url}
-                        alt={ev.alt}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                      />
-                      <span className="absolute bottom-1 left-1 bg-inverse-surface/80 text-inverse-on-surface text-[10px] px-1.5 py-0.5 rounded font-mono">
-                        {ev.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="p-3 bg-surface-container-low rounded-lg border border-dashed border-outline-variant text-center text-xs text-on-surface-variant">
-                  No digital media attached to this preliminary report.
-                </div>
-              )}
-            </div>
-
-            {/* Officer Remarks Box */}
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="block text-label-md font-semibold text-on-surface" htmlFor="officer-remarks">
-                  Duty Officer Investigation Remarks
-                </label>
-                {isSavedFeedback && (
-                  <span className="text-xs text-tertiary font-bold flex items-center gap-1">
-                    <span className="material-symbols-outlined text-xs">check</span> Saved
+                <span className="text-label-sm uppercase font-bold text-primary tracking-wider">Active Docket Review</span>
+                <h3 className="text-headline-sm font-bold text-on-surface flex items-center gap-2">
+                  <span>{currentSelection.id}</span>
+                  <span className={`text-xs px-2 py-0.5 rounded font-bold uppercase ${
+                    currentSelection.priority === 'Critical' ? 'bg-error-container text-on-error-container' :
+                    currentSelection.priority === 'High' ? 'bg-error-container text-on-error-container' :
+                    'bg-secondary-container text-on-secondary-container'
+                  }`}>
+                    {currentSelection.priority}
                   </span>
+                </h3>
+              </div>
+              <button
+                onClick={() => onOpenDossier(currentSelection)}
+                className="text-on-surface-variant hover:text-on-surface p-1 rounded-lg hover:bg-surface-container transition-colors"
+                title="Open Full Dossier View"
+                aria-label="Open Full Dossier View"
+              >
+                <span className="material-symbols-outlined">open_in_new</span>
+              </button>
+            </div>
+
+            {/* Case Summary Details */}
+            <div className="space-y-3">
+              <div>
+                <h4 className="text-label-md text-on-surface-variant font-medium">Incident Subject</h4>
+                <p className="text-body-md font-bold text-on-surface mt-0.5">{currentSelection.subject}</p>
+              </div>
+
+              {/* Location & Map Coordinate Pin */}
+              <div className="p-3 bg-surface-container-low rounded-lg border border-outline-variant/50 flex items-start gap-3">
+                <span className="material-symbols-outlined text-primary text-2xl shrink-0 mt-0.5">pin_drop</span>
+                <div className="text-body-sm">
+                  <div className="font-bold text-on-surface">{currentSelection.location}</div>
+                  <div className="text-on-surface-variant">{currentSelection.campusSector} • Sector C South Block</div>
+                  <div className="text-[11px] font-mono text-outline mt-0.5">{currentSelection.coordinates}</div>
+                </div>
+              </div>
+
+              {/* Reporter Meta */}
+              <div className="grid grid-cols-2 gap-3 text-body-sm py-1 border-y border-outline-variant/40">
+                <div>
+                  <span className="text-on-surface-variant text-label-sm">Reporter:</span>
+                  <div className="font-semibold text-on-surface">{currentSelection.reporterName}</div>
+                  <div className="text-xs text-on-surface-variant font-mono">
+                    {currentSelection.reporterId ? `Matric: ${currentSelection.reporterId}` : '100% Anonymous'}
+                  </div>
+                </div>
+                <div>
+                  <span className="text-on-surface-variant text-label-sm">Assigned Lead:</span>
+                  <div className="font-semibold text-on-surface">{currentSelection.assignedLead}</div>
+                  <div className="text-xs text-primary font-medium">{currentSelection.assignedTeam}</div>
+                </div>
+              </div>
+
+              {/* Uploaded Photo Evidence */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-label-md font-semibold text-on-surface">
+                    Uploaded Photo Evidence ({currentSelection.evidence ? currentSelection.evidence.length : 0})
+                  </span>
+                  <span className="text-label-sm text-outline">Verified Chain of Custody</span>
+                </div>
+
+                {currentSelection.evidence && currentSelection.evidence.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-2">
+                    {currentSelection.evidence.map((ev) => (
+                      <div
+                        key={ev.id}
+                        onClick={() => onOpenEvidence(ev)}
+                        className="relative rounded-lg overflow-hidden border border-outline-variant group bg-surface-container-high h-24 cursor-pointer hover:border-primary transition-all"
+                      >
+                        <img
+                          src={ev.url}
+                          alt={ev.alt}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        />
+                        <span className="absolute bottom-1 left-1 bg-inverse-surface/80 text-inverse-on-surface text-[10px] px-1.5 py-0.5 rounded font-mono">
+                          {ev.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-3 bg-surface-container-low rounded-lg border border-dashed border-outline-variant text-center text-xs text-on-surface-variant">
+                    No digital media attached to this preliminary report.
+                  </div>
                 )}
               </div>
-              <textarea
-                id="officer-remarks"
-                rows={3}
-                value={remarksDraft}
-                onChange={(e) => setRemarksDraft(e.target.value)}
-                placeholder="Enter findings, serial number checks, or dispatch instructions..."
-                className="w-full text-body-sm bg-surface-container-lowest border border-outline-variant rounded-lg p-2.5 text-on-surface placeholder:text-outline focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none"
-              />
-            </div>
 
-            {/* Action Bar */}
-            <div className="pt-2 flex flex-col gap-2">
-              <button
-                onClick={handleSaveRemarks}
-                className="w-full py-2.5 px-4 bg-primary hover:bg-primary-container text-on-primary font-label-lg rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95"
-              >
-                <span className="material-symbols-outlined text-lg">send</span>
-                <span>Update &amp; Notify Reporter</span>
-              </button>
+              {/* Officer Remarks Box */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-label-md font-semibold text-on-surface" htmlFor="officer-remarks">
+                    Duty Officer Investigation Remarks
+                  </label>
+                  {isSavedFeedback && (
+                    <span className="text-xs text-tertiary font-bold flex items-center gap-1">
+                      <span className="material-symbols-outlined text-xs">check</span> Saved
+                    </span>
+                  )}
+                </div>
+                <textarea
+                  id="officer-remarks"
+                  rows={3}
+                  value={remarksDraft}
+                  onChange={(e) => setRemarksDraft(e.target.value)}
+                  placeholder="Enter findings, serial number checks, or dispatch instructions..."
+                  className="w-full text-body-sm bg-surface-container-lowest border border-outline-variant rounded-lg p-2.5 text-on-surface placeholder:text-outline focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none"
+                />
+              </div>
 
-              <div className="flex items-center gap-2">
+              {/* Action Bar */}
+              <div className="pt-2 flex flex-col gap-2">
                 <button
-                  onClick={() => onOpenDossier(selectedIncident)}
-                  className="flex-1 py-1.5 px-3 border border-outline-variant rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md transition-colors flex items-center justify-center gap-1"
+                  onClick={handleSaveRemarks}
+                  className="w-full py-2.5 px-4 bg-primary hover:bg-primary-container text-on-primary font-label-lg rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
-                  <span className="material-symbols-outlined text-sm">print</span>
-                  <span>Print Dossier</span>
+                  <span className="material-symbols-outlined text-lg">send</span>
+                  <span>Update &amp; Notify Reporter</span>
                 </button>
-                <button
-                  onClick={() => onEscalate(selectedIncident.id)}
-                  className="flex-1 py-1.5 px-3 border border-error/40 rounded-lg text-error hover:bg-error-container/30 font-label-md transition-colors flex items-center justify-center gap-1"
-                >
-                  <span className="material-symbols-outlined text-sm">lock</span>
-                  <span>Escalate Case</span>
-                </button>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onOpenDossier(currentSelection)}
+                    className="flex-1 py-1.5 px-3 border border-outline-variant rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md transition-colors flex items-center justify-center gap-1"
+                  >
+                    <span className="material-symbols-outlined text-sm">print</span>
+                    <span>Print Dossier</span>
+                  </button>
+                  <button
+                    onClick={() => onEscalate(currentSelection.id)}
+                    className="flex-1 py-1.5 px-3 border border-error/40 rounded-lg text-error hover:bg-error-container/30 font-label-md transition-colors flex items-center justify-center gap-1"
+                  >
+                    <span className="material-symbols-outlined text-sm">lock</span>
+                    <span>Escalate Case</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </aside>
+          </aside>
+        ) : null}
       </div>
 
       {/* 3. EMBEDDED ANALYTICS & ACTIVITY FEED (BENTO SPLIT) */}

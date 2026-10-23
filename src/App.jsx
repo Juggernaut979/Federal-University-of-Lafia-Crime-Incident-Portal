@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { INITIAL_INCIDENTS } from './data/mockData';
-import { IncidentRecord } from './types';
-import { PublicPortal } from './components/public/PublicPortal';
-import { CommandDashboard } from './components/admin/CommandDashboard';
+import { INITIAL_INCIDENTS } from './data/mockData.js';
+import { PublicPortal } from './components/public/PublicPortal.jsx';
+import { CommandDashboard } from './components/admin/CommandDashboard.jsx';
 
 export default function App() {
-  const [viewMode, setViewMode] = useState<'public' | 'command'>('command');
-  const [incidents, setIncidents] = useState<IncidentRecord[]>(INITIAL_INCIDENTS);
+  const [viewMode, setViewMode] = useState('command');
+  const [incidents, setIncidents] = useState(INITIAL_INCIDENTS);
   const [directiveText, setDirectiveText] = useState(
     'Routine perimeter sweep in progress across Permanent Campus & Take-off Site. All gates on Tier 1 inspection protocols.'
   );
 
   // Add new incident (from either public report or officer file)
-  const handleAddIncident = (newIncident: IncidentRecord) => {
+  const handleAddIncident = (newIncident) => {
     setIncidents((prev) => [newIncident, ...prev]);
   };
 
   // Update investigation remarks
-  const handleUpdateRemarks = (incidentId: string, remarks: string) => {
+  const handleUpdateRemarks = (incidentId, remarks) => {
     setIncidents((prev) =>
       prev.map((inc) => {
         if (inc.id === incidentId) {
@@ -39,7 +38,7 @@ export default function App() {
   };
 
   // Handle broadcast alert
-  const handleBroadcast = (newDirective: string) => {
+  const handleBroadcast = (newDirective) => {
     setDirectiveText(newDirective);
   };
 

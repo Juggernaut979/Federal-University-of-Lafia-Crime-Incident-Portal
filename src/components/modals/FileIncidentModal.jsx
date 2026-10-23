@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
-import { IncidentRecord, PriorityLevel } from '../../types';
 
-interface FileIncidentModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onAddIncident: (incident: IncidentRecord) => void;
-}
-
-export const FileIncidentModal: React.FC<FileIncidentModalProps> = ({ isOpen, onClose, onAddIncident }) => {
+export const FileIncidentModal = ({ isOpen, onClose, onAddIncident }) => {
   const [type, setType] = useState('Theft');
-  const [campusSector, setCampusSector] = useState<'Permanent Campus' | 'Take-off Site'>('Permanent Campus');
+  const [campusSector, setCampusSector] = useState('Permanent Campus');
   const [location, setLocation] = useState('Faculty of Computing Lab');
-  const [priority, setPriority] = useState<PriorityLevel>('High');
+  const [priority, setPriority] = useState('High');
   const [reporterName, setReporterName] = useState('');
   const [reporterId, setReporterId] = useState('');
   const [subject, setSubject] = useState('');
@@ -21,7 +14,7 @@ export const FileIncidentModal: React.FC<FileIncidentModalProps> = ({ isOpen, on
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!subject.trim() || !narrative.trim()) return;
 
@@ -29,7 +22,7 @@ export const FileIncidentModal: React.FC<FileIncidentModalProps> = ({ isOpen, on
     const newId = `FUL-2025-0${newIdNum}`;
     const newPin = Math.floor(1000 + Math.random() * 9000).toString();
 
-    const newIncident: IncidentRecord = {
+    const newIncident = {
       id: newId,
       type,
       location: `${location} • ${campusSector === 'Permanent Campus' ? 'Perm Site' : 'Take-off Site'}`,
@@ -135,7 +128,7 @@ export const FileIncidentModal: React.FC<FileIncidentModalProps> = ({ isOpen, on
               <select
                 id="modal-priority"
                 value={priority}
-                onChange={(e) => setPriority(e.target.value as PriorityLevel)}
+                onChange={(e) => setPriority(e.target.value)}
                 className="w-full p-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md focus:border-primary focus:outline-none"
               >
                 <option value="Critical">Critical (Immediate Dispatch)</option>
@@ -152,7 +145,7 @@ export const FileIncidentModal: React.FC<FileIncidentModalProps> = ({ isOpen, on
               <select
                 id="modal-campus-sector"
                 value={campusSector}
-                onChange={(e) => setCampusSector(e.target.value as 'Permanent Campus' | 'Take-off Site')}
+                onChange={(e) => setCampusSector(e.target.value)}
                 className="w-full p-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-body-md focus:border-primary focus:outline-none"
               >
                 <option value="Permanent Campus">Permanent Campus (Makurdi Road)</option>

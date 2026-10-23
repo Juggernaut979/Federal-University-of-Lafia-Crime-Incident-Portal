@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-import { Officer } from '../../types';
 
-interface OfficerDirectoryViewProps {
-  officers: Officer[];
-}
-
-export const OfficerDirectoryView: React.FC<OfficerDirectoryViewProps> = ({ officers }) => {
+export const OfficerDirectoryView = ({ officers }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterShift, setFilterShift] = useState('All');
 

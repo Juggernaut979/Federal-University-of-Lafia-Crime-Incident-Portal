@@ -1,12 +1,6 @@
 import React from 'react';
-import { EvidenceItem } from '../../types';
 
-interface EvidenceLightboxModalProps {
-  evidence: EvidenceItem | null;
-  onClose: () => void;
-}
-
-export const EvidenceLightboxModal: React.FC<EvidenceLightboxModalProps> = ({ evidence, onClose }) => {
+export const EvidenceLightboxModal = ({ evidence, onClose }) => {
   if (!evidence) return null;
 
   return (

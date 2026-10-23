@@ -1,7 +1,7 @@
 import React from 'react';
-import { PATROL_UNITS } from '../../data/mockData';
+import { PATROL_UNITS } from '../../data/mockData.js';
 
-export const DispatchLogView: React.FC = () => {
+export const DispatchLogView = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-outline-variant gap-4">

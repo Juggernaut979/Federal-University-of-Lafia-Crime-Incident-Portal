@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import { IncidentRecord } from '../../types';
-import { DossierModal } from '../modals/DossierModal';
+import { DossierModal } from '../modals/DossierModal.jsx';
+import { DatabaseSchemaModal } from '../modals/DatabaseSchemaModal.jsx';
 
-interface PublicPortalProps {
-  incidents: IncidentRecord[];
-  onAddIncident: (incident: IncidentRecord) => void;
-  onSwitchToCommand: () => void;
-}
-
-export const PublicPortal: React.FC<PublicPortalProps> = ({
+export const PublicPortal = ({
   incidents,
   onAddIncident,
   onSwitchToCommand,
@@ -16,11 +10,12 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
   // Tracker State
   const [trackIdInput, setTrackIdInput] = useState('FUL-2025-0482');
   const [trackPinInput, setTrackPinInput] = useState('7941');
-  const [activeTrackedIncident, setActiveTrackedIncident] = useState<IncidentRecord | null>(
+  const [activeTrackedIncident, setActiveTrackedIncident] = useState(
     incidents.find((i) => i.id === 'FUL-2025-0482') || incidents[0] || null
   );
   const [trackError, setTrackError] = useState('');
-  const [dossierModalIncident, setDossierModalIncident] = useState<IncidentRecord | null>(null);
+  const [dossierModalIncident, setDossierModalIncident] = useState(null);
+  const [isDbSchemaOpen, setIsDbSchemaOpen] = useState(false);
 
   // Form State
   const [category, setCategory] = useState('Theft / Burglary / Lost Property');
@@ -30,11 +25,11 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
   const [reporterName, setReporterName] = useState('');
   const [reporterId, setReporterId] = useState('');
   const [narrative, setNarrative] = useState('');
-  const [uploadedFiles, setUploadedFiles] = useState<{ name: string; size: string }[]>([]);
-  const [submissionReceipt, setSubmissionReceipt] = useState<{ id: string; pin: string } | null>(null);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [submissionReceipt, setSubmissionReceipt] = useState(null);
 
   // Handle Track Lookup
-  const handleVerifyStatus = (e: React.FormEvent) => {
+  const handleVerifyStatus = (e) => {
     e.preventDefault();
     setTrackError('');
     const cleanId = trackIdInput.trim().toUpperCase();
@@ -48,7 +43,7 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
   };
 
   // Handle File Upload Simulation
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const newFiles = Array.from(e.target.files).map((f) => ({
         name: f.name,
@@ -59,7 +54,7 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
   };
 
   // Handle Report Form Submit
-  const handleReportSubmit = (e: React.FormEvent) => {
+  const handleReportSubmit = (e) => {
     e.preventDefault();
     if (!narrative.trim()) {
       alert('Please provide an incident narrative description before submitting.');
@@ -71,7 +66,7 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
     const newPin = Math.floor(1000 + Math.random() * 9000).toString();
     const isPerm = campusLocation.includes('Permanent');
 
-    const newIncident: IncidentRecord = {
+    const newIncident = {
       id: newId,
       type: category.split('/')[0].trim(),
       location: `${campusLocation.split('(')[0].trim()}`,
@@ -194,7 +189,7 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
               className="h-11 w-11 object-contain transition-transform group-hover:scale-105 duration-150"
               src="/assets/aistudio/Image_1_fa4d251d.png"
               onError={(e) => {
-                (e.target as HTMLImageElement).src =
+                e.target.src =
                   'https://lh3.googleusercontent.com/aida-public/AB6AXuAqj6UHLsud92YrLfNClbJuhphZMqUiqW6-eQqq-ASh-zQj28s7A_GbZ822Tai_lNH0JJxnP7jdjSIyzY1Y-Kgg6AKVGeV62pir00_4iJw3BknrOAmPcIbAmrYKv3Zc88fOiFzrjZudhoc0YqOnmGGL6U7bsIxll7bkFjPGkfpCSYaHQ2HE_70_QOXHqCxtyVxn3axEmBbRK_PtXV9k9DvYQM5pXhvWAZI4-XJQ4_j6fyThjb8YS_N5Fts5-KGMBRM65DE';
               }}
             />
@@ -228,6 +223,12 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
             >
               Track Case
             </a>
+            <button
+              onClick={() => setIsDbSchemaOpen(true)}
+              className="h-full flex items-center px-1 text-on-surface-variant hover:text-primary text-label-lg font-medium transition-colors"
+            >
+              Database Schema
+            </button>
             <button
               onClick={onSwitchToCommand}
               className="h-full flex items-center px-1 text-on-surface-variant hover:text-primary text-label-lg font-semibold transition-colors hover:border-b-2 hover:border-primary"
@@ -609,7 +610,7 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
 
                   {/* 4-step vertical timeline */}
                   <div className="space-y-6 relative pl-6 before:content-[''] before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-outline-variant">
-                    {activeTrackedIncident.timeline.map((step, idx) => (
+                    {activeTrackedIncident.timeline && activeTrackedIncident.timeline.map((step, idx) => (
                       <div key={idx} className={`relative ${!step.isDone && !step.isCurrent ? 'opacity-60' : ''}`}>
                         <div
                           className={`absolute -left-6 top-1 w-5 h-5 rounded-full flex items-center justify-center ring-4 ring-surface-container-lowest ${
@@ -968,7 +969,7 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
               className="h-10 w-10 object-contain"
               src="/assets/aistudio/Image_1_fa4d251d.png"
               onError={(e) => {
-                (e.target as HTMLImageElement).src =
+                e.target.src =
                   'https://lh3.googleusercontent.com/aida-public/AB6AXuAqj6UHLsud92YrLfNClbJuhphZMqUiqW6-eQqq-ASh-zQj28s7A_GbZ822Tai_lNH0JJxnP7jdjSIyzY1Y-Kgg6AKVGeV62pir00_4iJw3BknrOAmPcIbAmrYKv3Zc88fOiFzrjZudhoc0YqOnmGGL6U7bsIxll7bkFjPGkfpCSYaHQ2HE_70_QOXHqCxtyVxn3axEmBbRK_PtXV9k9DvYQM5pXhvWAZI4-XJQ4_j6fyThjb8YS_N5Fts5-KGMBRM65DE';
               }}
             />
@@ -987,14 +988,14 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
             <a className="hover:text-primary transition-colors" href="#emergency-sos">
               Emergency Dispatch
             </a>
+            <button onClick={() => setIsDbSchemaOpen(true)} className="hover:text-primary transition-colors font-medium">
+              PostgreSQL Schema
+            </button>
             <a className="hover:text-primary transition-colors" href="#quick-report-form">
               Reporting Policy
             </a>
             <a className="hover:text-primary transition-colors" href="#track-case">
               Chain of Custody Protocol
-            </a>
-            <a className="hover:text-primary transition-colors" href="#quick-report-form">
-              Whistleblower Protection
             </a>
             <button onClick={onSwitchToCommand} className="hover:text-primary transition-colors font-semibold">
               Staff &amp; Student Portal
@@ -1012,6 +1013,12 @@ export const PublicPortal: React.FC<PublicPortalProps> = ({
       <DossierModal
         incident={dossierModalIncident}
         onClose={() => setDossierModalIncident(null)}
+      />
+
+      {/* Database Schema Modal */}
+      <DatabaseSchemaModal
+        isOpen={isDbSchemaOpen}
+        onClose={() => setIsDbSchemaOpen(false)}
       />
     </div>
   );

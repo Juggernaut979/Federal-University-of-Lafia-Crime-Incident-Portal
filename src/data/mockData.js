@@ -1,6 +1,4 @@
-import { IncidentRecord, DispatchEvent, Officer, PatrolUnit } from '../types';
-
-export const INITIAL_INCIDENTS: IncidentRecord[] = [
+export const INITIAL_INCIDENTS = [
   {
     id: 'FUL-2025-0482',
     type: 'Theft',
@@ -301,7 +299,7 @@ export const INITIAL_INCIDENTS: IncidentRecord[] = [
   }
 ];
 
-export const DISPATCH_FEED_EVENTS: DispatchEvent[] = [
+export const DISPATCH_FEED_EVENTS = [
   {
     id: 'dsp-1',
     title: 'Patrol Unit 02 En Route',
@@ -332,7 +330,7 @@ export const DISPATCH_FEED_EVENTS: DispatchEvent[] = [
   }
 ];
 
-export const OFFICERS: Officer[] = [
+export const OFFICERS = [
   {
     id: 'off-1',
     name: 'Officer I. Danladi',
@@ -390,7 +388,7 @@ export const OFFICERS: Officer[] = [
   }
 ];
 
-export const PATROL_UNITS: PatrolUnit[] = [
+export const PATROL_UNITS = [
   {
     id: 'unit-1',
     callsign: 'Mobile Patrol 01',

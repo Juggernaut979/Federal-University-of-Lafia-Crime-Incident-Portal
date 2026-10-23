@@ -1,12 +1,6 @@
 import React from 'react';
-import { IncidentRecord } from '../../types';
 
-interface DossierModalProps {
-  incident: IncidentRecord | null;
-  onClose: () => void;
-}
-
-export const DossierModal: React.FC<DossierModalProps> = ({ incident, onClose }) => {
+export const DossierModal = ({ incident, onClose }) => {
   if (!incident) return null;
 
   const handlePrint = () => {
@@ -55,7 +49,7 @@ export const DossierModal: React.FC<DossierModalProps> = ({ incident, onClose })
                 alt="FULafia Seal"
                 className="h-16 w-16 object-contain"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src =
+                  e.target.src =
                     'https://lh3.googleusercontent.com/aida-public/AB6AXuAqj6UHLsud92YrLfNClbJuhphZMqUiqW6-eQqq-ASh-zQj28s7A_GbZ822Tai_lNH0JJxnP7jdjSIyzY1Y-Kgg6AKVGeV62pir00_4iJw3BknrOAmPcIbAmrYKv3Zc88fOiFzrjZudhoc0YqOnmGGL6U7bsIxll7bkFjPGkfpCSYaHQ2HE_70_QOXHqCxtyVxn3axEmBbRK_PtXV9k9DvYQM5pXhvWAZI4-XJQ4_j6fyThjb8YS_N5Fts5-KGMBRM65DE';
                 }}
               />

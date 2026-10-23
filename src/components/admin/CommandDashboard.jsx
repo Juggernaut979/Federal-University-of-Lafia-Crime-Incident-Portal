@@ -1,29 +1,18 @@
 import React, { useState } from 'react';
-import { IncidentRecord, CampusSector, EvidenceItem } from '../../types';
-import { IncidentTriageView } from './IncidentTriageView';
-import { CommandFeedView } from './CommandFeedView';
-import { CaseFilesView } from './CaseFilesView';
-import { OfficerDirectoryView } from './OfficerDirectoryView';
-import { DispatchLogView } from './DispatchLogView';
-import { SystemAnalyticsView } from './SystemAnalyticsView';
-import { BroadcastAlertModal } from '../modals/BroadcastAlertModal';
-import { FileIncidentModal } from '../modals/FileIncidentModal';
-import { DossierModal } from '../modals/DossierModal';
-import { EvidenceLightboxModal } from '../modals/EvidenceLightboxModal';
-import { DISPATCH_FEED_EVENTS, OFFICERS } from '../../data/mockData';
+import { IncidentTriageView } from './IncidentTriageView.jsx';
+import { CommandFeedView } from './CommandFeedView.jsx';
+import { CaseFilesView } from './CaseFilesView.jsx';
+import { OfficerDirectoryView } from './OfficerDirectoryView.jsx';
+import { DispatchLogView } from './DispatchLogView.jsx';
+import { SystemAnalyticsView } from './SystemAnalyticsView.jsx';
+import { BroadcastAlertModal } from '../modals/BroadcastAlertModal.jsx';
+import { FileIncidentModal } from '../modals/FileIncidentModal.jsx';
+import { DossierModal } from '../modals/DossierModal.jsx';
+import { EvidenceLightboxModal } from '../modals/EvidenceLightboxModal.jsx';
+import { DatabaseSchemaModal } from '../modals/DatabaseSchemaModal.jsx';
+import { DISPATCH_FEED_EVENTS, OFFICERS } from '../../data/mockData.js';
 
-interface CommandDashboardProps {
-  incidents: IncidentRecord[];
-  onAddIncident: (incident: IncidentRecord) => void;
-  onUpdateRemarks: (incidentId: string, remarks: string) => void;
-  directiveText: string;
-  onBroadcast: (newDirective: string) => void;
-  onSwitchToPublic: () => void;
-}
-
-type TabType = 'triage' | 'feed' | 'cases' | 'directory' | 'dispatch' | 'analytics';
-
-export const CommandDashboard: React.FC<CommandDashboardProps> = ({
+export const CommandDashboard = ({
   incidents,
   onAddIncident,
   onUpdateRemarks,
@@ -31,31 +20,32 @@ export const CommandDashboard: React.FC<CommandDashboardProps> = ({
   onBroadcast,
   onSwitchToPublic,
 }) => {
-  const [activeTab, setActiveTab] = useState<TabType>('triage');
-  const [selectedIncident, setSelectedIncident] = useState<IncidentRecord>(incidents[0] || {} as IncidentRecord);
-  const [activeSector, setActiveSector] = useState<CampusSector>('All Sectors');
+  const [activeTab, setActiveTab] = useState('triage');
+  const [selectedIncident, setSelectedIncident] = useState(incidents[0] || null);
+  const [activeSector, setActiveSector] = useState('All Sectors');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Modals state
   const [isBroadcastOpen, setIsBroadcastOpen] = useState(false);
   const [isFileModalOpen, setIsFileModalOpen] = useState(false);
-  const [dossierIncident, setDossierIncident] = useState<IncidentRecord | null>(null);
-  const [selectedEvidence, setSelectedEvidence] = useState<EvidenceItem | null>(null);
+  const [isDbSchemaOpen, setIsDbSchemaOpen] = useState(false);
+  const [dossierIncident, setDossierIncident] = useState(null);
+  const [selectedEvidence, setSelectedEvidence] = useState(null);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSecurityProtocols, setShowSecurityProtocols] = useState(false);
 
   // When a new incident is added, select it
-  const handleAddNewIncident = (newInc: IncidentRecord) => {
+  const handleAddNewIncident = (newInc) => {
     onAddIncident(newInc);
     setSelectedIncident(newInc);
     setActiveTab('triage');
   };
 
-  const handleEscalateCase = (id: string) => {
+  const handleEscalateCase = (id) => {
     alert(`Case ${id} escalated to Chief Security Officer (CSO) & Vice-Chancellor Executive Security Panel.`);
   };
 
-  const handleAssignPatrol = (inc: IncidentRecord) => {
+  const handleAssignPatrol = (inc) => {
     alert(`Patrol Unit dispatched to ${inc.location}. Radio call dispatched to duty officer.`);
   };
 
@@ -117,7 +107,7 @@ export const CommandDashboard: React.FC<CommandDashboardProps> = ({
                   className="w-full h-full object-contain"
                   src="/assets/aistudio/Image_1_fa4d251d.png"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src =
+                    e.target.src =
                       'https://lh3.googleusercontent.com/aida-public/AB6AXuAqj6UHLsud92YrLfNClbJuhphZMqUiqW6-eQqq-ASh-zQj28s7A_GbZ822Tai_lNH0JJxnP7jdjSIyzY1Y-Kgg6AKVGeV62pir00_4iJw3BknrOAmPcIbAmrYKv3Zc88fOiFzrjZudhoc0YqOnmGGL6U7bsIxll7bkFjPGkfpCSYaHQ2HE_70_QOXHqCxtyVxn3axEmBbRK_PtXV9k9DvYQM5pXhvWAZI4-XJQ4_j6fyThjb8YS_N5Fts5-KGMBRM65DE';
                   }}
                 />
@@ -222,6 +212,15 @@ export const CommandDashboard: React.FC<CommandDashboardProps> = ({
             >
               <span className="material-symbols-outlined">campaign</span>
               <span>Broadcast Alert</span>
+            </button>
+
+            {/* Research Architecture & Schema CTA */}
+            <button
+              onClick={() => setIsDbSchemaOpen(true)}
+              className="w-full py-2 px-3 bg-surface-container-highest/20 hover:bg-surface-container-highest/30 text-primary-fixed text-xs font-semibold rounded-lg border border-primary-fixed/30 flex items-center justify-center gap-1.5 transition-all"
+            >
+              <span className="material-symbols-outlined text-sm">database</span>
+              <span>PostgreSQL &amp; Spring Architecture</span>
             </button>
 
             <div className="flex flex-col space-y-1">
@@ -346,7 +345,7 @@ export const CommandDashboard: React.FC<CommandDashboardProps> = ({
             {activeTab === 'triage' && (
               <IncidentTriageView
                 incidents={displayedIncidents}
-                selectedIncident={selectedIncident}
+                selectedIncident={selectedIncident || incidents[0]}
                 onSelectIncident={(inc) => setSelectedIncident(inc)}
                 onUpdateRemarks={onUpdateRemarks}
                 onOpenDossier={(inc) => setDossierIncident(inc)}
@@ -397,7 +396,7 @@ export const CommandDashboard: React.FC<CommandDashboardProps> = ({
                   className="w-full h-full object-contain"
                   src="/assets/aistudio/Image_1_fa4d251d.png"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src =
+                    e.target.src =
                       'https://lh3.googleusercontent.com/aida-public/AB6AXuAqj6UHLsud92YrLfNClbJuhphZMqUiqW6-eQqq-ASh-zQj28s7A_GbZ822Tai_lNH0JJxnP7jdjSIyzY1Y-Kgg6AKVGeV62pir00_4iJw3BknrOAmPcIbAmrYKv3Zc88fOiFzrjZudhoc0YqOnmGGL6U7bsIxll7bkFjPGkfpCSYaHQ2HE_70_QOXHqCxtyVxn3axEmBbRK_PtXV9k9DvYQM5pXhvWAZI4-XJQ4_j6fyThjb8YS_N5Fts5-KGMBRM65DE';
                   }}
                 />
@@ -417,12 +416,12 @@ export const CommandDashboard: React.FC<CommandDashboardProps> = ({
                 Emergency Dispatch
               </button>
               <span className="text-outline-variant">•</span>
-              <button onClick={() => setShowSecurityProtocols(true)} className="hover:text-on-surface transition-colors">
-                Reporting Policy
+              <button onClick={() => setIsDbSchemaOpen(true)} className="hover:text-primary font-bold transition-colors">
+                PostgreSQL Schema
               </button>
               <span className="text-outline-variant">•</span>
               <button onClick={() => setShowSecurityProtocols(true)} className="hover:text-on-surface transition-colors">
-                Chain of Custody Protocol
+                Reporting Policy
               </button>
               <span className="text-outline-variant">•</span>
               <button onClick={onSwitchToPublic} className="hover:text-on-surface transition-colors">
@@ -488,6 +487,11 @@ export const CommandDashboard: React.FC<CommandDashboardProps> = ({
         isOpen={isFileModalOpen}
         onClose={() => setIsFileModalOpen(false)}
         onAddIncident={handleAddNewIncident}
+      />
+
+      <DatabaseSchemaModal
+        isOpen={isDbSchemaOpen}
+        onClose={() => setIsDbSchemaOpen(false)}
       />
 
       <DossierModal

@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 
-interface BroadcastAlertModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onBroadcast: (newDirective: string, hotline?: string) => void;
-}
-
-export const BroadcastAlertModal: React.FC<BroadcastAlertModalProps> = ({ isOpen, onClose, onBroadcast }) => {
+export const BroadcastAlertModal = ({ isOpen, onClose, onBroadcast }) => {
   const [directiveText, setDirectiveText] = useState(
     'Routine perimeter sweep in progress across Permanent Campus & Take-off Site. All gates on Tier 1 inspection protocols.'
   );
-  const [priority, setPriority] = useState<'CRITICAL' | 'WARNING' | 'ADVISORY'>('CRITICAL');
+  const [priority, setPriority] = useState('CRITICAL');
   const [channelSMS, setChannelSMS] = useState(true);
   const [channelTicker, setChannelTicker] = useState(true);
   const [channelRadio, setChannelRadio] = useState(true);
@@ -18,7 +12,7 @@ export const BroadcastAlertModal: React.FC<BroadcastAlertModalProps> = ({ isOpen
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!directiveText.trim()) return;
 
@@ -70,7 +64,7 @@ export const BroadcastAlertModal: React.FC<BroadcastAlertModalProps> = ({ isOpen
                 Directive Severity Level
               </label>
               <div className="grid grid-cols-3 gap-2">
-                {(['CRITICAL', 'WARNING', 'ADVISORY'] as const).map((level) => (
+                {['CRITICAL', 'WARNING', 'ADVISORY'].map((level) => (
                   <button
                     key={level}
                     type="button"
